@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏀🏀🏀🏀</title>
+    <title>🏀球</title>
     <!-- 載入bs5 css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/css/bootstrap.min.css"
         integrity="sha512-fw7f+TcMjTb7bpbLJZlP8g2Y4XcCyFZW8uy8HsRZsH/SwbMw0plKHFHr99DN3l04VsYNwvzicUX/6qurvIxbxw=="
@@ -55,8 +55,8 @@
             <div class="col-12 col-sm-8 text-center position-relative">
                 <img src="./images/01.png" alt="">
                 
-                <!-- 按鈕群組（使用 flex 排列） -->
-                <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                
+                <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
                     <button id="startBtn" type="button" class="btn btn-primary class-btn">開始</button>
                     <button id="shotBtn" type="button" class="btn btn-success class-btn hide-btn">投籃</button>
                     <button id="stopBtn" type="button" class="btn btn-danger class-btn">停止</button>
@@ -90,6 +90,8 @@
         let bonusTime = 11;
         let maxScore = 0;
 
+        //最高分數重設
+        // localStorage.setItem('maxScore', 20);
         let getMaxScore = Number(localStorage.getItem('maxScore'));
         if (getMaxScore) {
             maxScore = getMaxScore;
