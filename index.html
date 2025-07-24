@@ -130,15 +130,15 @@
         maxScoreSpan.innerHTML = maxScore;
 
         // shotBtn hideBtn
-        shotBtn.setAttribute('class', 'btn btn-success class-btn me-5 hide-btn');
+        shotBtn.setAttribute('class', 'btn btn-success class-btn me-5 mb-4 hide-btn');
 
 
         // action
         //開始遊戲
         startBtn.addEventListener('click', function () {
             console.log('startBtn click ok');
-            this.setAttribute('class', 'btn btn-primary class-btn me-5 mb-5 hide-btn ');
-            shotBtn.setAttribute('class', 'btn btn-success class-btn me-5  mb-5 show-btn');
+            this.setAttribute('class', 'btn btn-primary class-btn me-5 mb-4 hide-btn');
+            shotBtn.setAttribute('class', 'btn btn-success class-btn me-5 mb-4 show-btn');
 
             myInterval = setInterval(() => {
                 startTime--;
@@ -197,10 +197,10 @@
             timeSpan.setAttribute('class', 'text-info display-6')
 
             // shotBtn hideBtn
-            shotBtn.setAttribute('class', 'btn btn-success class-btn me-5 mb-5 hide-btn');
+            shotBtn.setAttribute('class', 'btn btn-success class-btn me-5 mb-4 hide-btn');
 
             // startBtn showBtn
-            startBtn.setAttribute('class', 'btn btn-primary class-btn me-5 mb-5 show-btn');
+            startBtn.setAttribute('class', 'btn btn-primary class-btn me-5 mb-4 show-btn');
 
 
 
