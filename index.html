@@ -120,150 +120,217 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         // bind
-        const startBtn = document.getElementById("startBtn");
-        const shotBtn = document.getElementById("shotBtn");
-        const stopBtn = document.getElementById("stopBtn");
-        const scoreSpan = document.getElementById("score");
-        const timeSpan = document.getElementById("time");
-        const maxScoreSpan = document.getElementById("maxScore");
-        const ball = document.getElementById("ball");
+        // const startBtn = document.getElementById("startBtn");
+        // const shotBtn = document.getElementById("shotBtn");
+        // const stopBtn = document.getElementById("stopBtn");
+        // const scoreSpan = document.getElementById("score");
+        // const timeSpan = document.getElementById("time");
+        // const maxScoreSpan = document.getElementById("maxScore");
+        // const ball = document.getElementById("ball");
 
-        const pauseOverlay = document.getElementById("pauseOverlay");
-        const continueBtn = document.getElementById("continueBtn");
-        const resetBtn = document.getElementById("resetBtn");
+        // const pauseOverlay = document.getElementById("pauseOverlay");
+        // const continueBtn = document.getElementById("continueBtn");
+        // const resetBtn = document.getElementById("resetBtn");
 
-        let score = 0;
-        let startTime = 20;
-        let bonusTime = 11;
-        let maxScore = 0;
-        let isGameStarted = false;
-
-        //最高分數重設
-        // localStorage.setItem('maxScore', 0);
-        let getMaxScore = Number(localStorage.getItem('maxScore'));
-        if (getMaxScore) {
-            maxScore = getMaxScore;
-        }
-
-        let myInterval = null;
-        maxScoreSpan.innerHTML = maxScore;
-        shotBtn.classList.add('hide-btn');
 
         // 開始遊戲
         startBtn.addEventListener('click', function () {
-            isGameStarted = true;
-            clearInterval(myInterval);
-            this.classList.add('hide-btn');
-            shotBtn.classList.remove('hide-btn');
 
-            myInterval = setInterval(() => {
-                startTime--;
-                timeSpan.innerHTML = startTime;
-
-                if (startTime < 1) {
-                    clearInterval(myInterval);
-                }
-
-                if (startTime < bonusTime) {
-                    timeSpan.setAttribute('class', 'text-danger display-6');
-                }
-
-            }, 1000);
         });
 
         // 投籃
         shotBtn.addEventListener('click', function () {
-            if (startTime < 1) {
-                return false;
-            }
 
-            shootAnimation();
-            //加分
-            if (startTime > bonusTime) {
-                score += 2;
-            } else {
-                score += 3;
-            }
-            scoreSpan.innerHTML = score;
-            //計算最高分數
-            //儲存最高分數
-            if (score > maxScore) {
-                maxScore = score;
-                localStorage.setItem('maxScore', maxScore);
-                maxScoreSpan.innerHTML = maxScore;
-            }
         });
 
         // 停止
         stopBtn.addEventListener('click', function () {
-            if (!isGameStarted) {
-                return; // 還沒開始就按暫停，直接忽略
-            }
 
-            clearInterval(myInterval);
-            shotBtn.classList.add('hide-btn');
-            stopBtn.classList.add('hide-btn');
-            pauseOverlay.style.display = 'block';
-            // startTime = 20;
-            // timeSpan.innerHTML = startTime;
-            // timeSpan.setAttribute('class', 'text-info display-6');
-
-            // shotBtn.classList.add('hide-btn');
-            // startBtn.classList.remove('hide-btn');
         });
 
         continueBtn.addEventListener('click', function () {
-            console.log('continueBtn click');
-            clearInterval(myInterval); // <== 先清掉舊的
-            pauseOverlay.style.display = 'none';
-            shotBtn.classList.remove('hide-btn');
-            stopBtn.classList.remove('hide-btn');
 
-            myInterval = setInterval(() => {
-                startTime--;
-                timeSpan.innerHTML = startTime;
-
-                if (startTime < 1) {
-                    clearInterval(myInterval);
-                }
-
-                if (startTime < bonusTime) {
-                    timeSpan.setAttribute('class', 'text-danger display-6')
-                }
-
-            }, 1000);
         });
 
         resetBtn.addEventListener('click', function () {
-            isGameStarted = false;
-            clearInterval(myInterval);
-            pauseOverlay.style.display = 'none';
 
-            startTime = 20;
-            timeSpan.innerHTML = startTime;
-            timeSpan.className = 'text-info display-6';
-
-            score = 0;
-            scoreSpan.innerHTML = '🏀🏀🏀'; // 分數歸零
-
-            shotBtn.classList.add('hide-btn');
-            startBtn.classList.remove('hide-btn');
-            stopBtn.classList.remove('hide-btn');
         });
 
-        function shootAnimation() {
-            // 顯示球（必要！否則動畫執行前看不到）
-            ball.style.display = "block";
 
-            // 啟動動畫
-            ball.classList.add("shooting");
 
-            // 清除動畫
-            setTimeout(() => {
-                ball.classList.remove("shooting");
-                ball.style.display = "none";
-            }, 500);
-        }
+        $(document).ready(function () {
+            //jq start
+            //1. bind
+            const startBtn = $('#startBtn');
+            const shotBtn = $('#shotBtn');
+            const stopBtn = $('#stopBtn');
+            const scoreSpan = $('#score');
+            const timeSpan = $('#time');
+            const maxScoreSpan = $('#maxScore');
+            const ball = $('#ball');
+
+            const pauseOverlay = $('#pauseOverlay');
+            const continueBtn = $('#continueBtn');
+            const resetBtn = $('#resetBtn');
+
+
+            let score = 0;
+            let startTime = 20;
+            let bonusTime = 11;
+            let maxScore = 0;
+            let isGameStarted = false;
+
+            //2. action init
+            //最高分數重設
+            // localStorage.setItem('maxScore', 0);
+            let getMaxScore = localStorage.getItem('maxScore');
+            if (getMaxScore !== null) {
+                maxScore = Number(getMaxScore);
+            }
+            // let getMaxScore = Number(localStorage.getItem('maxScore'));
+            // if (getMaxScore) {
+            //     maxScore = getMaxScore;
+            // }
+
+            let myInterval = null;
+            maxScoreSpan.html(maxScore);
+            shotBtn.addClass('hide-btn');
+
+
+
+            //2. action
+            //startBtn click
+            startBtn.click(function (e) {
+                e.preventDefault();
+                isGameStarted = true;
+                clearInterval(myInterval);
+                $(this).addClass('hide-btn');
+                shotBtn.removeClass('hide-btn');
+
+                myInterval = setInterval(() => {
+                    startTime--;
+                    timeSpan.html(startTime);
+
+                    if (startTime < 1) {
+                        clearInterval(myInterval);
+                    }
+
+                    if (startTime < bonusTime) {
+                        timeSpan.attr('class', 'text-danger display-6');
+                    }
+
+                }, 1000);
+
+            });
+
+            //shotBtn click
+            shotBtn.click(function (e) {
+                e.preventDefault();
+                if (startTime < 1) {
+                    return false;
+                }
+
+                shootAnimation();
+                //加分
+                if (startTime > bonusTime) {
+                    score += 2;
+                } else {
+                    score += 3;
+                }
+                scoreSpan.html(score);
+                //計算最高分數
+                //儲存最高分數
+                if (score > maxScore) {
+                    maxScore = score;
+                    localStorage.setItem('maxScore', maxScore);
+                    maxScoreSpan.html(maxScore);
+                }
+
+            });
+
+            //stopBtn click
+            stopBtn.click(function (e) {
+                e.preventDefault();
+                if (!isGameStarted) {
+                    return; // 還沒開始就按暫停，直接忽略
+                }
+
+                clearInterval(myInterval);
+                shotBtn.addClass('hide-btn');
+                stopBtn.addClass('hide-btn');
+                pauseOverlay.show();
+                // startTime = 20;
+                // timeSpan.innerHTML = startTime;
+                // timeSpan.setAttribute('class', 'text-info display-6');
+
+                // shotBtn.classList.add('hide-btn');
+                // startBtn.classList.remove('hide-btn');
+
+            });
+
+            //continueBtn click
+            continueBtn.click(function (e) {
+                e.preventDefault();
+                console.log('continueBtn click');
+                clearInterval(myInterval); // <== 先清掉舊的
+                pauseOverlay.hide();
+                shotBtn.removeClass('hide-btn');
+                stopBtn.removeClass('hide-btn');
+
+                myInterval = setInterval(() => {
+                    startTime--;
+                    timeSpan.html(startTime);
+
+                    if (startTime < 1) {
+                        clearInterval(myInterval);
+                    }
+
+                    if (startTime < bonusTime) {
+                        timeSpan.attr('class', 'text-danger display-6');
+                    }
+
+                }, 1000);
+
+            });
+
+            //resetBtn click
+            resetBtn.click(function (e) {
+                e.preventDefault();
+                isGameStarted = false;
+                clearInterval(myInterval);
+                pauseOverlay.hide();
+
+                startTime = 20;
+                timeSpan.html(startTime);
+                timeSpan.addClass('text-info display-6');
+
+                score = 0;
+                // 分數歸零
+                scoreSpan.html('🏀🏀🏀');
+
+                shotBtn.addClass('hide-btn');
+                startBtn.removeClass('hide-btn');
+                stopBtn.removeClass('hide-btn');
+
+            });
+
+            //shootAnimation
+            function shootAnimation() {
+                // 顯示球（必要！否則動畫執行前看不到）
+                ball.show();
+
+                // 啟動動畫
+                ball.addClass('shooting');
+
+                // 清除動畫
+                setTimeout(() => {
+                    ball.removeClass('shooting');
+                    ball.hide();
+                }, 500);
+            }
+
+            //jq end
+        });
     </script>
 </body>
 
